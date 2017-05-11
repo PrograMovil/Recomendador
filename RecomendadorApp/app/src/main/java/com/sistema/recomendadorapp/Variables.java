@@ -7,7 +7,7 @@ package com.sistema.recomendadorapp;
 public class Variables {
 
     //    URL base del backend
-    private static final String URLBase = "http://192.168.0.104:8084/RecomendadorBackend/RecomendadorServlet?"; // Cambiarla segun donde se ejecute el backend
+    private static final String URLBase = "http://192.168.2.176:8084/RecomendadorBackend/RecomendadorServlet?"; // Cambiarla segun donde se ejecute el backend
 
     public static String getURLBase() {
         return URLBase;

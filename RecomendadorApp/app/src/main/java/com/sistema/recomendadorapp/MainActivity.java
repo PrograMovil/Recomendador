@@ -32,19 +32,19 @@ public class MainActivity extends AppCompatActivity {
     String urlRequest;
     String result = "";
     TextView textView;
+    ListView mListV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mListV=(ListView) findViewById(R.id.lista_canciones);
         SearchView searchView = (SearchView) findViewById(R.id.search);
         searchView.setQueryHint("Buscar canciones..");
         textView = (TextView) findViewById(R.id.test);
-
-//        ListView list = (ListView) findViewById(R.id.lista_canciones);
-//        final ListViewAdapter listAdapter = new ListViewAdapter(this, arrayList);
-//        list.setAdapter(listAdapter);
+        urlRequest = Variables.getURLBase() + "action=Buscar&valor=";
+        new BuscarTask(mListV,getApplicationContext()).execute();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 urlRequest = urlBase + "action=Buscar&valor=" + busqueda;
 //                Toast.makeText(MainActivity.this, urlRequest, Toast.LENGTH_LONG).show();
                 textView.setText("Buscando...");
-                new BuscarTask().execute();
+                new BuscarTask(mListV,getApplicationContext()).execute();
                 return false;
             }
 
@@ -82,11 +82,13 @@ public class MainActivity extends AppCompatActivity {
             this.context = context;
             this.cancioneslist = cancionesList;
             inflater = LayoutInflater.from(context);
-            this.cancioneslist = new ArrayList<Cancion>();
         }
 
         class ViewHolder {
             TextView nombre;
+            TextView artista;
+            TextView genero;
+            TextView album;
         }
 
         @Override
@@ -111,29 +113,61 @@ public class MainActivity extends AppCompatActivity {
                 holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.list_item, null);
                 // Locate the TextViews in list_items.xml
-                holder.nombre = (TextView) convertView.findViewById(R.id.nombre_cancion);
+                holder.nombre = (TextView) convertView.findViewById(R.id.nombre);
+                holder.artista = (TextView) convertView.findViewById(R.id.artista);
+                holder.album = (TextView) convertView.findViewById(R.id.album);
+                holder.genero = (TextView) convertView.findViewById(R.id.genero);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             // Set the results into TextViews
             holder.nombre.setText(cancioneslist.get(position).getNombre());
+            holder.artista.setText(cancioneslist.get(position).getArtista());
+            holder.album.setText(cancioneslist.get(position).getAlbum());
+            holder.genero.setText(cancioneslist.get(position).getGenero());
             return convertView;
         }
     }
 
     public class BuscarTask extends AsyncTask<String, Void, String> {
 
+        ListView mListV;
+        Context mContext;
+
+        public BuscarTask(ListView lv, Context c){
+            mListV=lv;
+            mContext=c;
+        }
+
         @Override
         protected void onPostExecute(String result) {
+
+            ArrayList<Cancion> canciones=new ArrayList<>();
+
 
             if(result == null){
                 Toast.makeText(MainActivity.this, "No hay canciones :(", Toast.LENGTH_SHORT).show();
             }else{
+
+
                 Toast.makeText(MainActivity.this, "Disfrutalas ;)!!", Toast.LENGTH_SHORT).show();
                 try{
+
                     JSONArray data = new JSONArray(result);
-                    textView.setText(data.toString());
+                    Cancion c;
+                    for(int i=0;i<data.length();i++){
+                        c=new Cancion();
+                        c.setNombre(data.getJSONObject(i).getString("nombre"));
+                        c.setArtista(data.getJSONObject(i).getString("artista"));
+                        c.setAlbum(data.getJSONObject(i).getString("album"));
+                        c.setGenero(data.getJSONObject(i).getString("genero"));
+                        canciones.add(c);
+                    }
+                    ListViewAdapter adapter=new ListViewAdapter(mContext,canciones);
+                    mListV.setAdapter(adapter);
+
+
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
