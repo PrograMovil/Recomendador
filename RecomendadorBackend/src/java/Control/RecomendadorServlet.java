@@ -51,7 +51,7 @@ public class RecomendadorServlet extends HttpServlet {
                 switch (accion) {
                     
                     case "Testing": {
-                        out.println("Hello Android !!!!");
+                        out.println("Hello Recomendador Android !!!!");
                     }
                     break;
                     case "Buscar": {

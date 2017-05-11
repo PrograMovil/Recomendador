@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.io.Serializable;
 
 /**
- *
- * @author SheshoVega
+ * Created by SheshoVega on 10/05/2017.
  */
+
 public class Cancion implements Serializable {
     private int id;
     private String nombre;
@@ -40,7 +35,7 @@ public class Cancion implements Serializable {
         this.album = null;
         this.genero = null;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -84,6 +79,5 @@ public class Cancion implements Serializable {
     @Override
     public String toString() {
         return "Cancion {" + " id : " + id + ", nombre : " + nombre + ", artista : " + artista + ", album : " + album + ", genero : " + genero + '}';
-    }  
-    
+    }
 }
