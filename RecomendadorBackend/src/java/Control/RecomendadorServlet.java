@@ -61,6 +61,13 @@ public class RecomendadorServlet extends HttpServlet {
                         response.getWriter().write(gson.toJson(canciones));
                     }
                     break;
+                    case "Todo": {
+                        canciones.clear();
+                        canciones = ctrl.getTodasLasCanciones();
+                        response.getWriter().write(gson.toJson(canciones));
+                    }
+                    break;
+                    
                 }
             }catch (Exception ex) {
                 Logger.getLogger(RecomendadorServlet.class.getName()).log(Level.SEVERE, null, ex);
