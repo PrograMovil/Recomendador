@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_alignStart="@+id/textViewNombre"
+            android:textSize="15dp"
             android:text="nombre"
             android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -51,6 +52,7 @@
             android:id="@+id/artista"
             android:layout_width="wrap_content"
             android:layout_marginStart="60dp"
+            android:textSize="15dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/textViewArtista"
             android:layout_below="@+id/textViewNombre"
@@ -73,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
+            android:textSize="15dp"
             android:layout_alignStart="@+id/textViewAlbum"
             android:layout_below="@+id/textViewArtista"
             android:text="album"
@@ -94,10 +97,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
+            android:textSize="15dp"
             android:layout_alignStart="@+id/textViewAlbum"
             android:layout_below="@+id/textViewAlbum"
             android:text="genero"
             android:textAppearance="?attr/textAppearanceListItem" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="52dp"
+                card_view:srcCompat="@drawable/musicplayer"
+                android:layout_alignTop="@+id/artista"
+                android:layout_alignParentEnd="true" />
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
